@@ -16,9 +16,9 @@
     - do this on the server side
     - once a round is complete, ask the user for his/her name and record that time.
 
-* Steps: [0/9]
+* Steps: [1/9]
 
-1. [ ] setup github ~repo~
+1. [X] setup github ~repo~
 2. [ ] think about the project on paper.
 3. [ ] create a firebase project, and link with project
 4. [ ] build the front-end functionality without actually using any calls to the back-end
