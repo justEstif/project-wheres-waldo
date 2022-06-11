@@ -16,21 +16,8 @@
     - do this on the server side
     - once a round is complete, ask the user for his/her name and record that time.
 
+* Steps: [0/9]
 
-* Steps
-
-1. setup github ~repo~
-2. think about the project on paper.
-3. create a firebase project, and link with project
-4. build the front-end functionality without actually using any calls to the back-end
-   - the functionality which pops the targeting box and drop-down menu on the screen when the user click on the photo and removes it when the user clicks away
-     - is this ~async~?
-5. hook up the functionality for validating with your back end whether the user has clicked in the right place for that character
-6. tie it into your front end so you can seamlessly select characters, validate theme, and place the appropriate markets on the map if the selection was correct
-7. add the ability to time the user from when they first load the page and then display their score time after they have identified all characters
-   - create a popup that asks them to enter their name for the high score table if they have earned it
-8. play
-9. push to github, and host
 1. [ ] setup github ~repo~
 2. [ ] think about the project on paper.
 3. [ ] create a firebase project, and link with project
@@ -47,3 +34,26 @@
 ** Optional
 
 - Load many images into your database and allow the user to select from among them before starting the game
+
+* Thought Process
+
+** TODO how to i box around a specific part of an image
+- [[https://dev.to/turpp/find-out-exactly-where-someone-clicked-on-an-image-2b1h][Find out exactly where on an image someone clicked]]
+  - I need to store the character and all its positions together in something like this:
+** TODO store one collection like this
+    #+begin_src js
+const characters = {
+    waldo : {
+       name: "Waldo",
+       positions: [....]
+    }
+}
+    #+end_src
+- If the user clicks one of the positions, a pop up box and a random list of options (including the correct answer)
+** TODO how do I do this?
+  - we can make the options in some sort of state, and one of the options will always be the correct option
+    #+begin_src js
+const [options, setOptions]
+const [correctOption, setCorrectOption]
+    #+end_src
+** TODO how do I keep track of the time?
