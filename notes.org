@@ -1,0 +1,37 @@
+* Notes
+
+- you'll build an app that feels a whole lot like a photo tagging app
+- you'll start with a large photograph, which contains several elements that the user is meant to find
+  - [[https://wallpaperaccess.com/wheres-waldo][site to find images]]
+- the user will make selections for each character and they will get feedback on whether they are correct or not
+- you need to choose a photo, identify where exactly each person is and save that to the database
+  - when the user clicks the photo, it should place a targeting box around the portion of the photo where the user has clicked
+  - that box should contain a list of possible characters
+  - when the user selected one of there characters, you should check with your back-end to see if that character is actually within the targeting box.
+    - provide the user with appropriate feedback,
+      - if wrong => an error message
+      - if correct => place a marker on the photo in the character's location
+      - remove the targeting box until the user clicks again
+  - keep track of how long it takes between when the photo is first loaded and when the user finally identifies all characters
+    - do this on the server side
+    - once a round is complete, ask the user for his/her name and record that time.
+
+
+* Steps
+
+1. setup github ~repo~
+2. think about the project on paper.
+3. create a firebase project, and link with project
+4. build the front-end functionality without actually using any calls to the back-end
+   - the functionality which pops the targeting box and drop-down menu on the screen when the user click on the photo and removes it when the user clicks away
+     - is this ~async~?
+5. hook up the functionality for validating with your back end whether the user has clicked in the right place for that character
+6. tie it into your front end so you can seamlessly select characters, validate theme, and place the appropriate markets on the map if the selection was correct
+7. add the ability to time the user from when they first load the page and then display their score time after they have identified all characters
+   - create a popup that asks them to enter their name for the high score table if they have earned it
+8. play
+9. push to github, and host
+
+** Optional
+
+- Load many images into your database and allow the user to select from among them before starting the game
