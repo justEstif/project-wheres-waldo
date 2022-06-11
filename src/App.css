@@ -1,0 +1,26 @@
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu+Mono&display=swap");
+body {
+  font-family: "ubuntu mono", "Courier New", Courier, monospace;
+  text-align: center;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+}
+
+.img-container {
+  flex: 50%;
+}
+.img-container img {
+  max-width: 100%;
+  max-height: 100%;
+  margin: auto;
+  display: block;
+}
+
+.position-container {
+  flex: 20%;
+  font-weight: bold;
+  font-size: 25px;
+}
