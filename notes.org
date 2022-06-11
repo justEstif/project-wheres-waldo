@@ -31,6 +31,18 @@
    - create a popup that asks them to enter their name for the high score table if they have earned it
 8. play
 9. push to github, and host
+1. [ ] setup github ~repo~
+2. [ ] think about the project on paper.
+3. [ ] create a firebase project, and link with project
+4. [ ] build the front-end functionality without actually using any calls to the back-end
+   - [ ] the functionality which pops the targeting box and drop-down menu on the screen when the user click on the photo and removes it when the user clicks away
+     - [ ] is this ~async~?
+5. [ ] hook up the functionality for validating with your back end whether the user has clicked in the right place for that character
+6. [ ] tie it into your front end so you can seamlessly select characters, validate theme, and place the appropriate markets on the map if the selection was correct
+7. [ ] add the ability to time the user from when they first load the page and then display their score time after they have identified all characters
+   - [ ] create a popup that asks them to enter their name for the high score table if they have earned it
+8. [ ] play
+9. [ ] push to github, and host
 
 ** Optional
 
