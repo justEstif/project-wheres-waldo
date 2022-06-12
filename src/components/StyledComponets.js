@@ -13,14 +13,10 @@ const OverlayDiv = styled.div`
   display: ${(props) => (props.position ? "block" : "none")};
   position: absolute;
   z-index: 2;
-
-  /*  NOTE IDK */
-  /* margin-left: auto;
-  margin-right: auto; */
-
-  background-color: black;
-  width: 25px;
-  height: 25px;
+  border: 4px solid red;
+  background-color: rgba(255, 255, 255, 0.5);
+  width: 85px;
+  height: 85px;
   border-radius: 50%;
   transform: translate3d(-50%, -50%, 0);
   left: ${(props) => props.position[0] + "px"};
@@ -38,9 +34,6 @@ const ImgDiv = styled.div`
   width: 100vw;
   background: url(${waldoImg}) no-repeat center center fixed;
   background-size: cover;
-
-  /* margin: auto; */
-  /* display: block; */
 `;
 
 export { AppDiv, OverlayDiv, PosDiv, ImgDiv };
