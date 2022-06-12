@@ -9,15 +9,29 @@ const AppDiv = styled.div`
   background-size: cover;
 `;
 const OverlayDiv = styled.div`
-  display: ${(props) => (props.click ? "block" : "none")};
+  /* display: ${(props) => (props.click ? "block" : "none")}; */
+  // NOTE
+  display: block;
   position: absolute;
+  z-index: 2;
+
+  /* background-color: rgba(0, 0, 0, 0.85);
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.85);
-  z-index: 2;
-  color: white;
+  color: white; */
+
+  margin-left: auto;
+  margin-right: auto;
+  background-color: rgba(255, 255, 255, 0.7);
+  width: 150px;
+  border-radius: 50%;
+  height: 150px;
+
+  // NOTE: maybe I could move the overlay based on the x and y
+  bottom: 10px;
+  left: 10px;
 `;
 
 const OverlayToggleBtn = styled.button`
@@ -26,10 +40,12 @@ const OverlayToggleBtn = styled.button`
 `;
 
 const OverlayP = styled.p`
+  // NOTE
+  display: none;
   position: absolute;
   top: 50%;
   left: 50%;
-  font-size: 50px;
+  font-size: 30px;
   color: white;
   transform: translate(-50%, -50%);
 `;
