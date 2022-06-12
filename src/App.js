@@ -23,7 +23,7 @@ const App = (props) => {
         <Img
           src={waldoImg}
           alt="Where's Waldo"
-          onMouseMove={(e) => handleChange(e)}
+          onClick={(e) => handleChange(e)}
         />
       </ImgDiv>
       <PosDiv>
