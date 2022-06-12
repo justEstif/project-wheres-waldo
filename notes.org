@@ -62,7 +62,19 @@ return (
 ** TODO Find out how to box around a specific part of an image
 - my idea is that if I could know the corners of the character, everything in between can be included?
 - maybe we would have a ~handlechange~ function that would be attached to the image
+  - if I find the max and min x and y, I could use a simple subtraction and if else statement
   - when the image is clicked, it would pass in the event, which would have an x and y position and if the x and y are not part of any of the stored positions, it would return nothing, else it would have a response
+    #+begin_src js
+const clicked = [x,y]
+if((x <= maxX || x>= minX) && (y <= maxY || y >= minY))
+    printOptionsOnPoint(clicked)
+else return
+    #+end_src
+- I think I could use styled components to blur out parts of the picture.
+  - I am going to go through the styled components docs
+  - some stack overflow: [[https://stackoverflow.com/questions/26265041/blur-part-of-an-image-with-css][blur part of image with css]]
+
+
 ** TODO how to i box around a specific part of an image
   - I need to store the character and all its positions together in something like this:
 ** TODO store one collection like this
