@@ -3,27 +3,58 @@ import { useState } from "react";
 // styling
 import "normalize.css";
 // assets
+import { waldoImg } from "./assets";
 import {
   AppDiv,
   OverlayDiv,
   OverlayP,
-  OverlayToggleBtn,
+  PosDiv,
+  ImgDiv,
+  Img,
 } from "./components/StyledComponets";
 
 const App = (props) => {
-  const [click, setClick] = useState(false);
-  const handleClick = () => setClick(!click);
+  const [position, setPosition] = useState([]);
+  const handleClick = (e) => {
+    const x = e.clientX;
+    const y = e.clientY;
+    // const x = e.clientX - bnds.left;
+    // const y = e.clientY - bnds.top;
+    setPosition([x, y]);
+  };
 
   return (
     <AppDiv>
-      <OverlayToggleBtn onClick={() => handleClick()}>
-        Turn Overlay:{click ? "off" : "on"}
-      </OverlayToggleBtn>
-      <OverlayDiv click={click}>
-        <OverlayP>Overlay</OverlayP>
-      </OverlayDiv>
+      <h1>Simple React App</h1>
+      <OverlayDiv position={position}></OverlayDiv>
+      <ImgDiv>
+        <Img
+          src={waldoImg}
+          alt="Where's Waldo"
+          onClick={(e) => handleClick(e)}
+        />
+      </ImgDiv>
+      <PosDiv>
+        <div>x: {position[0]}</div>
+        <div>y: {position[1]}</div>
+      </PosDiv>
     </AppDiv>
   );
 };
 
 export default App;
+
+// <AppDiv>
+//   <h1>Simple React App</h1>
+//   <ImgDiv>
+//     <Img
+//       src={waldoImg}
+//       alt="Where's Waldo"
+//       onMouseMove={(e) => handleChange(e)}
+//     />
+//   </ImgDiv>
+//   <PosDiv>
+//     <div>x: {position[0]}</div>
+//     <div>y: {position[1]}</div>
+//   </PosDiv>
+// </AppDiv>

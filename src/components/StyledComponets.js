@@ -2,41 +2,43 @@ import styled from "styled-components";
 import { waldoImg } from "../assets/index";
 
 const AppDiv = styled.div`
+  @import url("https://fonts.googleapis.com/css2?family=Ubuntu+Mono&display=swap");
+  display: flex;
+  flex-direction: column;
   font-family: "ubuntu mono", "Courier New", Courier, monospace;
-  height: 100vh;
-  width: 100vw;
-  background: url(${waldoImg}) no-repeat center center fixed;
-  background-size: cover;
+  text-align: center;
 `;
+// const AppDiv = styled.div`
+//   font-family: "ubuntu mono", "Courier New", Courier, monospace;
+//   height: 100vh;
+//   width: 100vw;
+//   background: url(${waldoImg}) no-repeat center center fixed;
+//   background-size: cover;
+// `;
+
 const OverlayDiv = styled.div`
-  /* display: ${(props) => (props.click ? "block" : "none")}; */
-  // NOTE
-  display: block;
+  // NOTE created a different thing
+  display: ${(props) => (props.position ? "block" : "none")};
   position: absolute;
   z-index: 2;
 
-  /* background-color: rgba(0, 0, 0, 0.85);
-  top: 0;
+  /* top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
-  color: white; */
+  bottom: 0; */
 
-  margin-left: auto;
-  margin-right: auto;
-  background-color: rgba(255, 255, 255, 0.7);
-  width: 150px;
+  // NOTE IDK
+  /* margin-left: auto;
+  margin-right: auto; */
+
+  background-color: black;
+  width: 25px;
+  height: 25px;
   border-radius: 50%;
-  height: 150px;
 
-  // NOTE: maybe I could move the overlay based on the x and y
-  bottom: 10px;
-  left: 10px;
-`;
-
-const OverlayToggleBtn = styled.button`
-  position: relative;
-  z-index: 3;
+  // NOTE: this is inaccurate
+  left: ${(props) => props.position[0] + "px"};
+  top: ${(props) => props.position[1] + "px"};
 `;
 
 const OverlayP = styled.p`
@@ -50,4 +52,19 @@ const OverlayP = styled.p`
   transform: translate(-50%, -50%);
 `;
 
-export { AppDiv, OverlayDiv, OverlayP, OverlayToggleBtn };
+const PosDiv = styled.div`
+  flex: 20%;
+  font-weight: bold;
+  font-size: 25px;
+`;
+
+const ImgDiv = styled.div`
+  flex: 50%;
+`;
+const Img = styled.img`
+  max-width: 100%;
+  max-height: 100%;
+  margin: auto;
+  display: block;
+`;
+export { AppDiv, OverlayDiv, OverlayP, PosDiv, ImgDiv, Img };
