@@ -37,7 +37,9 @@
 
 * Thought Process
 
-** TODO [[https://www.chestysoft.com/imagefile/javascript/get-coordinates.asp][Find out exactly where on an image someone clicked]]
+** DONE [[https://www.chestysoft.com/imagefile/javascript/get-coordinates.asp][Find out exactly where on an image someone clicked]]
+- I was able to display where on the image the user moved the mouse over
+*** TODO Next is to trigger it only ~onClick~
 #+begin_src js
 import { waldoImg } from "./assets/index"
 const App = () => {
