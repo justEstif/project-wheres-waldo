@@ -11,10 +11,11 @@ const App = (props) => {
 
   const handleChange = (e) => {
     const bnds = e.target.getBoundingClientRect();
-    const x = e.clientX - bnds.left;
-    const y = e.clientY - bnds.top;
+    const x = parseInt(e.clientX - bnds.left);
+    const y = parseInt(e.clientY - bnds.top);
     setPosition([x, y]);
   };
+
   return (
     <AppDiv>
       <h1>Simple React App</h1>
