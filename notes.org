@@ -77,6 +77,10 @@ else return
 
 ** TODO how to i box around a specific part of an image
   - I need to store the character and all its positions together in something like this:
+  - one way is to on click, change blur the clicked part
+    - the body would have a certain background img
+    - when I click on a part of the image, we would get the coordinates, and select the part, and list down the options
+
 ** TODO store one collection like this
     #+begin_src js
 const characters = {
