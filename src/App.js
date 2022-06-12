@@ -2,9 +2,9 @@
 import { useState } from "react";
 // styling
 import "normalize.css";
-import "./App.css";
 // assets
 import { waldoImg } from "./assets/index";
+import { AppDiv, ImgDiv, Img, PosDiv } from "./components/StyledComponets";
 
 const App = (props) => {
   const [position, setPosition] = useState([]);
@@ -16,20 +16,20 @@ const App = (props) => {
     setPosition([x, y]);
   };
   return (
-    <div className="App">
+    <AppDiv>
       <h1>Simple React App</h1>
-      <div className="img-container">
-        <img
-          alt="Where's Waldo"
+      <ImgDiv>
+        <Img
           src={waldoImg}
+          alt="Where's Waldo"
           onMouseMove={(e) => handleChange(e)}
         />
-      </div>
-      <div className="position-container">
+      </ImgDiv>
+      <PosDiv>
         <div>x: {position[0]}</div>
         <div>y: {position[1]}</div>
-      </div>
-    </div>
+      </PosDiv>
+    </AppDiv>
   );
 };
 
