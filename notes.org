@@ -103,3 +103,4 @@ const [correctOption, setCorrectOption]
 - they will be in an array
 ** Challenge
 - I am having difficulty making the background image
+  - I was able to fix this

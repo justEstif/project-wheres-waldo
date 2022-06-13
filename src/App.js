@@ -40,6 +40,7 @@ const App = ({}) => {
     <Fragment>
       <GlobalStyle />
       <AppDiv>
+        <Overlay position={position}></Overlay>
         <Image handleClick={handleClick} imgSrc={rPlace}></Image>
       </AppDiv>
     </Fragment>
