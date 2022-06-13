@@ -1,20 +1,30 @@
-//? react
 import { Fragment, useState } from "react";
-//? styling
-// import "normalize.css";
 import styled, { createGlobalStyle } from "styled-components";
-//? assets
-import { waldoImg } from "./assets";
-//? components
+import { waldoImg, rPlace } from "./assets";
 import { Overlay, Image } from "./components/index";
 
 const GlobalStyle = createGlobalStyle`
-  body {
-  margin: 0;
-  height: 100%;
+html {
+  box-sizing: border-box;
+}
 
-  font-family: "ubuntu mono", "Courier New", Courier, monospace;
-  }
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+`;
+
+const AppDiv = styled.div`
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  overflow: hidden;
 `;
 
 const App = ({}) => {
@@ -27,11 +37,10 @@ const App = ({}) => {
   };
 
   return (
-    <Fragment>
+    <AppDiv>
       <GlobalStyle />
-      <Overlay position={position}></Overlay>
-      <Image handleClick={handleClick} imgSrc={waldoImg}></Image>
-    </Fragment>
+      <Image handleClick={handleClick} imgSrc={rPlace}></Image>
+    </AppDiv>
   );
 };
 
