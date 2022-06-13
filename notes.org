@@ -98,3 +98,6 @@ const [options, setOptions]
 const [correctOption, setCorrectOption]
     #+end_src
 ** TODO how do I keep track of the time?
+** TODO what hidden things should be in the picutre
+- just start with a small number of things - 5 options
+- they will be in an array

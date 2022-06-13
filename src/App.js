@@ -1,16 +1,23 @@
-// react
-import { useState } from "react";
-// styling
-import "normalize.css";
-// assets
-import {
-  AppDiv,
-  OverlayDiv,
-  PosDiv,
-  ImgDiv,
-} from "./components/StyledComponets";
+//? react
+import { Fragment, useState } from "react";
+//? styling
+// import "normalize.css";
+import styled, { createGlobalStyle } from "styled-components";
+//? assets
+import { waldoImg } from "./assets";
+//? components
+import { Overlay, Image } from "./components/index";
 
-const App = (props) => {
+const GlobalStyle = createGlobalStyle`
+  body {
+  margin: 0;
+  height: 100%;
+
+  font-family: "ubuntu mono", "Courier New", Courier, monospace;
+  }
+`;
+
+const App = ({}) => {
   const [position, setPosition] = useState([]);
   const handleClick = (e) => {
     const bnds = e.target.getBoundingClientRect();
@@ -20,16 +27,11 @@ const App = (props) => {
   };
 
   return (
-    <AppDiv>
-      <OverlayDiv position={position}></OverlayDiv>
-      <ImgDiv onClick={(e) => handleClick(e)}>
-        <h1>Simple React App</h1>
-      </ImgDiv>
-      <PosDiv>
-        <div>x: {position[0]}</div>
-        <div>y: {position[1]}</div>
-      </PosDiv>
-    </AppDiv>
+    <Fragment>
+      <GlobalStyle />
+      <Overlay position={position}></Overlay>
+      <Image handleClick={handleClick} imgSrc={waldoImg}></Image>
+    </Fragment>
   );
 };
 
