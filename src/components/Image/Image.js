@@ -1,13 +1,13 @@
 import styled from "styled-components";
 
 const ImgDiv = styled.div`
-  height: 100%;
-  width: 100%;
-  background: url(${(props) => props.imgSrc}) no-repeat center center fixed;
-  /* -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover; */
-  background-size: contain;
+  /*//! change both height and width when zooming in */
+  min-height: 200%;
+  min-width: 200%;
+  background-image: url(${(props) => props.imgSrc});
+  background-size: cover;
+  background-repeat: no-repeat;
+  border: 2px red solid;
 `;
 
 const Image = ({ handleClick, imgSrc }) => {

@@ -13,10 +13,10 @@ html {
 }
 
 body {
-  margin: 0;
+  min-height: 100vh;
   padding: 0;
+  margin: 0;
 }
-
 `;
 
 const AppDiv = styled.div`
@@ -24,7 +24,7 @@ const AppDiv = styled.div`
   width: 100%;
   position: absolute;
   left: 0;
-  overflow: hidden;
+  /* overflow: hidden; */
 `;
 
 const App = ({}) => {
@@ -37,10 +37,12 @@ const App = ({}) => {
   };
 
   return (
-    <AppDiv>
+    <Fragment>
       <GlobalStyle />
-      <Image handleClick={handleClick} imgSrc={rPlace}></Image>
-    </AppDiv>
+      <AppDiv>
+        <Image handleClick={handleClick} imgSrc={rPlace}></Image>
+      </AppDiv>
+    </Fragment>
   );
 };
 
