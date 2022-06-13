@@ -22,7 +22,7 @@ const OverlayDiv = styled.div`
 const Overlay = ({ position }) => {
   return (
     <OverlayDiv position={position}>
-      <Dropdown></Dropdown>
+      <Dropdown show={true}></Dropdown>
       {/* <div>x: {position[0]}</div>
       <div>y: {position[1]}</div> */}
     </OverlayDiv>
