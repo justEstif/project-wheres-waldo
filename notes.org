@@ -104,3 +104,5 @@ const [correctOption, setCorrectOption]
 ** Challenge
 - I am having difficulty making the background image
   - I was able to fix this
+
+* TODO Create firestore project
