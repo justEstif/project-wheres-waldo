@@ -13,8 +13,8 @@ const firebaseConfig = {
   projectId: "wheres-waldo-15d9f",
   storageBucket: "wheres-waldo-15d9f.appspot.com",
   messagingSenderId: "262154515559",
-  appId: "1:262154515559:web:25a13269bba9da0202d0c2",
-  measurementId: "G-THV2Y2PNPZ",
+  appId: "1:262154515559:web:b02542e02edcce5a02d0c2",
+  measurementId: "G-2J9LNCEYD8",
 };
 
 // Initialize Firebase
