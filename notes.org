@@ -74,12 +74,43 @@ const characters = {
 ** DONE what hidden things should be in the picture
 - My app will start with finding 5 flags in the r/place, and it could add more options later
 - they will be an array of objects
-* TODO Create firestore project
-** TODO link it with github
-* TODO Create a better designed form for the submission
-** TODO make it use radio buttons
-* TODO Create table of values with hand
-* TODO Figure out how to add the values to the database and access it
-* TODO the overlay and form must be encapsulated in a separate div
-* TODO the overlay needs to be left there is the user is correct
-* TODO if the user clicks somewhere else though, we have to do something else though
+** DONE Create firestore project
+*** DONE link it with github
+** TODO change cursor instead of using a pointer component
+- maybe
+** TODO Create a better designed form for the submission
+*** TODO make it use radio buttons
+** TODO Create table of values with hand
+** TODO Figure out how to add the values to the database and access it
+** TODO the overlay and form must be encapsulated in a separate div
+** TODO the overlay needs to be left there is the user is correct
+** TODO if the user clicks somewhere else though, we have to do something else though
+** TODO what is the proper naming style for styled components
+
+* Components
+
+** App
+
+** DropdownForm
+#+begin_src
+this is a FormDiv in a DropDownDiv
+- the DropDownDiv is to control whether is visible or not
+- the form div is for styling the form itself
+- NOTE the DropDownDiv and OverlayDiv play similar roles
+#+end_src
+** Image
+- returns a ImgDiv with a background image applied
+** Overlay
+- DropdownForm + Pointer
+- NOTE: remove this later
+** Pointer
+*** I need to remove this and just use a custom cursor
+* Functions
+- handleClick
+- handleMouseMove
+- handleSubmit
+
+  | Country | x-mi | y-min | x-max | y-max |
+  | Waldo   | 2573 |   403 |  2618 |   452 |
+  | Greece  | 2099 |  2886 |  2273 |  2953 |
+  | Algeria | 2307 |  2370 |  2546 |  2415 |
