@@ -1,24 +1,28 @@
 import styled from "styled-components";
 import { Pointer, DropdownForm } from "../index";
-
 const OverlayDiv = styled.div`
   position: absolute;
-  transform: translate3d(-50%, -50%, 0);
-  left: ${(props) => props.position[0] + "px"};
-  top: ${(props) => props.position[1] + "px"};
-  > * {
-    position: absolute;
-    z-index: 2;
-  }
+  z-index: 2;
 `;
 
-const Overlay = ({ position }) => {
+const Overlay = ({
+  clicked,
+  cursorPos,
+  clickedPos,
+  handleClick,
+  handleSubmit,
+}) => {
   return (
-    <OverlayDiv position={position}>
-      <Pointer position={position}></Pointer>
-      <DropdownForm show={true}></DropdownForm>
+    <OverlayDiv>
+      <Pointer handleClick={handleClick} cursorPos={cursorPos}></Pointer>
+      <DropdownForm
+        clickedPos={clickedPos}
+        handleSubmit={handleSubmit}
+        clicked={clicked}
+      ></DropdownForm>
     </OverlayDiv>
   );
 };
 
 export default Overlay;
+
