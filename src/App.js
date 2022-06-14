@@ -1,7 +1,9 @@
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import { rPlace } from "./assets";
+import { db } from "./firebase-config";
 import { Header, Overlay, Image } from "./components/index";
+import { getDocs, collection } from "firebase/firestore";
 
 const GlobalStyle = createGlobalStyle`
   html {
@@ -35,17 +37,41 @@ const AppDiv = styled.div`
   scrollbar-width: none;
 `;
 
+const getCoordinates = (e) => {
+  const bnds = e.target.getBoundingClientRect();
+  const x = e.clientX - bnds.left;
+  const y = e.clientY - bnds.top;
+  return [x, y];
+};
+
+const getCountries = async () => {
+  const countryCollectionRef = collection(db, "country-positions");
+  const docs = await getDocs(countryCollectionRef);
+  const countries = [];
+  docs.forEach((doc) => {
+    countries.push({
+      id: doc.id,
+      name: doc.data()["name"],
+      xMin: doc.data()["x-min"],
+      xMax: doc.data()["x-max"],
+      yMin: doc.data()["y-min"],
+      yMax: doc.data()["y-max"],
+    });
+  });
+  return countries;
+};
+
 const App = () => {
   const [clicked, setClicked] = useState(false);
   const [cursorPos, setCursorPos] = useState([]);
   const [clickedPos, setClickedPos] = useState([]);
 
-  const getCoordinates = (e) => {
-    const bnds = e.target.getBoundingClientRect();
-    const x = e.clientX - bnds.left;
-    const y = e.clientY - bnds.top;
-    return [x, y];
-  };
+  // ! database stuff
+  const [countries, setCountries] = useState([]);
+  useEffect(() => {
+    setCountries(getCountries());
+  }, []);
+  // ! database stuff
 
   const handleClick = () => {
     setClickedPos(cursorPos);
@@ -55,7 +81,8 @@ const App = () => {
   const handleMouseOver = (e) => setCursorPos(getCoordinates(e));
 
   const handleSubmit = (e) => {
-    console.log("submit");
+    console.log("submit"); // ! remove later
+    getCountries();
     setClicked(false);
   };
 

@@ -12,7 +12,7 @@ const HeaderDiv = styled.div`
   align-items: center;
   font-size: 50px;
 `;
-const Header = () => {
+const Header = ({ countries }) => {
   return (
     <HeaderDiv>
       <div>Header</div>
