@@ -11,36 +11,47 @@ const DropdownDiv = styled.div.attrs((props) => ({
   z-index: 2;
 `;
 
-const FormDiv = styled.form`
+const ButtonsDiv = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
   background-color: black;
   color: white;
-  /* width: 180px; */
+  width: 150px;
+  height: 150px;
   padding: 20px 40px;
-
   user-select: none;
   -moz-user-select: none;
   -webkit-user-select: none;
   -ms-user-select: none;
 `;
 
-const InputSty = styled.input`
-  opacity: 0;
-`;
 const ButtonSty = styled.button`
+  font-family: "ubuntu mono", "Courier New", Courier, monospace;
+  background-color: black;
+  border: none;
+  color: white;
+  font-size: 16px;
+
+  padding: 5px;
+  text-align: center;
+
+  // TODO change button style if correct
+  // text-decoration: line-through;
+  // pointer-events: none;
+
   &:hover {
-    color: green;
+    border-bottom: 1px solid red;
   }
 `;
-const DropdownForm = ({ clickedPos, clicked, handleSubmit }) => {
+
+const DropdownForm = ({ clickedPos, clicked, handleSubmit, countries }) => {
   const display = clicked ? "block" : "none";
   return (
     <DropdownDiv display={display} clickedPos={clickedPos}>
       {/* //! change the form values*/}
-      <FormDiv>
+      <ButtonsDiv>
         <ButtonSty value={"south-korea"} onClick={(e) => handleSubmit(e)}>
           South Korea
         </ButtonSty>
@@ -50,32 +61,9 @@ const DropdownForm = ({ clickedPos, clicked, handleSubmit }) => {
         <ButtonSty value={"greece"} onClick={(e) => handleSubmit(e)}>
           Greece
         </ButtonSty>
-      </FormDiv>
+      </ButtonsDiv>
     </DropdownDiv>
   );
 };
 
 export default DropdownForm;
-
-/**
- * 
- * 
-        <p>
-          <InputSty
-            type="radio"
-            id="south-korea"
-            name="country"
-            value="south-korea"
-          />
-          <LabelSty htmlFor="south-korea">South Korea</LabelSty>
-        </p>
-        <p>
-          <InputSty type="radio" id="greece" name="country" value="greece" />
-          <LabelSty htmlFor="greece">Greece</LabelSty>
-        </p>
-        <p>
-          <InputSty type="radio" id="algeria" name="country" value="algeria" />
-          <LabelSty htmlFor="algeria">Algeria</LabelSty>
-        </p>
- */
-

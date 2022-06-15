@@ -9,8 +9,8 @@ const PointerDiv = styled.div.attrs(({ cursorPos }) => ({
   display: block;
   border-radius: 50%;
   background-color: black;
-  width: 20px;
-  height: 20px;
+  width: 40px;
+  height: 40px;
 
   position: absolute;
   z-index: 2;

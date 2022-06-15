@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Timer } from "../index";
 const HeaderDiv = styled.div`
   position: fixed;
   top: 0;
@@ -16,7 +17,7 @@ const Header = ({ countries }) => {
   return (
     <HeaderDiv>
       <div>Header</div>
-      <div>Timer</div>
+      <Timer />
     </HeaderDiv>
   );
 };

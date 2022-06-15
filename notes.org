@@ -1,32 +1,33 @@
 * Notes
 
-- you'll build an app that feels a whole lot like a photo tagging app
-- you'll start with a large photograph, which contains several elements that the user is meant to find
-  - [[https://wallpaperaccess.com/wheres-waldo][site to find images]]
-  - I have decided on using the 2022 r/place final picture
-    - I will be using the 2k quality which is good enough and wouldn't take that long to load
-- the user will make selections for each character and they will get feedback on whether they are correct or not
+- start with a large photograph which contains several elements that the user is meant to find
+  - you need to choose a photo, identify where exactly each person is and save that to the database
+  - user will make selections and they will get feedback on whether they are correct or not
+    - [ ] when the user clicks the photo, it should place a targeting box around the portion of the photo where the user has clicked
+    - [ ] that box should contain a list of possible characters
+    - when the user selected one of there characters, you should check with your back-end to see if that character is actually within the targeting box.
+      - provide the user with appropriate feedback,
+        - [ ] if wrong => an error message
+        - [ ] if correct => place a marker on the photo in the character's location
+        - remove the targeting box until the user clicks again
+        - [ ] remove the selected correct answer from options
+    - keep track of how long it takes between when the photo is first loaded and when the user finally identifies all characters
+      - do this on the server side
+      - once a round is complete, ask the user for his/her name and record that time.
   - I will be doing a simple flag game, so I will find a couple of flags and make the user pick from among them
-- you need to choose a photo, identify where exactly each person is and save that to the database
-  - when the user clicks the photo, it should place a targeting box around the portion of the photo where the user has clicked
-  - that box should contain a list of possible characters
-  - when the user selected one of there characters, you should check with your back-end to see if that character is actually within the targeting box.
-    - provide the user with appropriate feedback,
-      - if wrong => an error message
-      - if correct => place a marker on the photo in the character's location
-      - *remove the targeting box until the user clicks again*
-  - keep track of how long it takes between when the photo is first loaded and when the user finally identifies all characters
-    - do this on the server side
-    - once a round is complete, ask the user for his/her name and record that time.
-* Steps: [3/9]
+  - I have decided on using the 2022 r/place final picture, 4k quality.
+* Steps: [0/0]
 
 1. [X] setup github ~repo~
 2. [X] think about the project on paper.
 3. [X] create a firebase project, and link with project
-4. [ ] build the front-end functionality without actually using any calls to the back-end
-   - [ ] the functionality which pops the targeting box and drop-down menu on the screen when the user click on the photo and removes it when the user clicks away
-     - [ ] is this ~async~?
+4. [X] build the front-end functionality without actually using any calls to the back-end
+   - [X] the functionality which pops the targeting box and drop-down menu on the screen when the user click on the photo and removes it when the user clicks away
+     - [X] is this ~async~?
 5. [ ] hook up the functionality for validating with your back end whether the user has clicked in the right place for that character
+   - there are a lot of ways to interpret this
+   - do I get the entire database at the program load?
+   - do I get the value for that matching option from the database and compare the selected result with the data on the database?
 6. [ ] tie it into your front end so you can seamlessly select characters, validate theme, and place the appropriate markets on the map if the selection was correct
 7. [ ] add the ability to time the user from when they first load the page and then display their score time after they have identified all characters
    - [ ] create a popup that asks them to enter their name for the high score table if they have earned it
@@ -36,6 +37,7 @@
 ** Optional
 
 - Load many images into your database and allow the user to select from among them before starting the game
+- this should be possible using =useEffect= + =Image= component
 
 * Thought Process
 
@@ -45,10 +47,12 @@
 *** DONE Next is to trigger it only ~onClick~
 *** TODO Make the overlay stay if the user gets the answer right
 *** TODO Make the form hide on submit
-** TODO Find out how to box around a specific part of an image
+*** TODO If the answer is correct mark that area
+    - the area will be covered with some overlay
+** TODO Find out how to box around a specific part of an image on the correct answer
 - I don't have to box around a specific part of the image. I just need to find the boundaries, and if the user gets the answer right around that area, it would be considered correct.
-- I will have a confirm answer function that will take in the clicked coordinates, and the form answer, and compare it with the value in the database.
-  - what if the click somewhere else though? => if the next click is not the form, we disable the form??
+- [X] get answer from user and compare with the answer in database
+- [X] clicking away from form disables the form until the next click
 - maybe we would have a ~handlechange~ function that would be attached to the image
   - if I find the max and min x and y, I could use a simple subtraction and if else statement
   - when the image is clicked, it would pass in the event, which would have an x and y position and if the x and y are not part of any of the stored positions, it would return nothing, else it would have a response
@@ -59,7 +63,8 @@ if((x <= maxX || x>= minX) && (y <= maxY || y >= minY))
 else return
     #+end_src
 
-** TODO store one collection like this
+** DONE store one collection like this
+- I followed this example for storing the values into state after getting them
     #+begin_src js
 const characters = {
     waldo : {
@@ -69,7 +74,8 @@ const characters = {
 }
     #+end_src
 ** TODO how do I do this?
-  - we can make the options in some sort of state, and one of the options will always be the correct option ~const [options, setOptions]~, and then we remove it from list if it is correct
+- we can make the options in some sort of state, and one of the options will always be the correct option ~const [options, setOptions]~, and then we remove it from list if it is correct
+** TODO make the buttons in the form created by looping over the state
 ** TODO how do I keep track of the time?
 ** DONE what hidden things should be in the picture
 - My app will start with finding 5 flags in the r/place, and it could add more options later
@@ -77,15 +83,17 @@ const characters = {
 ** DONE Create firestore project
 *** DONE link it with github
 ** TODO change cursor instead of using a pointer component
-- maybe
 ** TODO Create a better designed form for the submission
 *** TODO make it use radio buttons
-** TODO Create table of values with hand
-** TODO Figure out how to add the values to the database and access it
+** DONE Create table of values with hand
+** DONE Figure out how to add the values to the database and access it
 ** TODO the overlay and form must be encapsulated in a separate div
-** TODO the overlay needs to be left there is the user is correct
+- I don't remember why I wrote this
+** TODO the overlay needs to be left there if the user is correct
+- This is an important thing
 ** TODO if the user clicks somewhere else though, we have to do something else though
 ** TODO what is the proper naming style for styled components
+- Not just the styled components, but the structure and naming of the files isn't good right now
 
 * Components
 
