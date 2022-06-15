@@ -107,6 +107,10 @@ this is a FormDiv in a DropDownDiv
 *** I need to remove this and just use a custom cursor
 * Functions
 - handleClick
+- handleResponse
+  - should check if the answer is correct
+  - if the answer is correct remove it from the available options
+  - must show some indication if the answer is right or wrong
 - handleMouseMove
 - handleSubmit
 

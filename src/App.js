@@ -19,7 +19,7 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     margin: 0;
   }
-  ::-webkit-scrollbar { 
+  ::-webkit-scrollbar {
     display: none;
   }
 `;
@@ -50,7 +50,6 @@ const getCountries = async () => {
   const countries = [];
   docs.forEach((doc) => {
     countries.push({
-      id: doc.id,
       name: doc.data()["name"],
       xMin: doc.data()["x-min"],
       xMax: doc.data()["x-max"],
@@ -69,7 +68,7 @@ const App = () => {
   // ! database stuff
   const [countries, setCountries] = useState([]);
   useEffect(() => {
-    setCountries(getCountries());
+    getCountries().then((value) => setCountries(value));
   }, []);
   // ! database stuff
 
@@ -81,11 +80,28 @@ const App = () => {
   const handleMouseOver = (e) => setCursorPos(getCoordinates(e));
 
   const handleSubmit = (e) => {
-    console.log("submit"); // ! remove later
-    getCountries();
+    e.preventDefault();
+    checkAnswer(e.target.value, clickedPos);
     setClicked(false);
+    setCursorPos([]);
   };
 
+  const checkAnswer = (userPick, clickedPos) => {
+    for (const country of countries) {
+      if (country.name === userPick) {
+        const correctX =
+          clickedPos[0] <= country.xMax && clickedPos[0] >= country.xMin;
+        const correctY =
+          clickedPos[1] <= country.yMax && clickedPos[1] >= country.yMin;
+        if (correctX && correctY) {
+          console.log("correct");
+        } else {
+          console.log("incorrect");
+        }
+        break;
+      }
+    }
+  };
   return (
     <Fragment>
       <GlobalStyle />
