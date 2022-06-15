@@ -95,6 +95,7 @@ const App = () => {
           clickedPos[1] <= country.yMax && clickedPos[1] >= country.yMin;
         if (correctX && correctY) {
           console.log("correct");
+          // TODO cover the area within that range
         } else {
           console.log("incorrect");
         }
@@ -113,6 +114,7 @@ const App = () => {
           handleClick={handleClick}
           clickedPos={clickedPos}
           handleSubmit={handleSubmit}
+          countries={countries}
         ></Overlay>
         <Image handleMouseOver={handleMouseOver} imgSrc={rPlace}></Image>
       </AppDiv>
