@@ -30,7 +30,7 @@ const FormDiv = styled.form`
 const InputSty = styled.input`
   opacity: 0;
 `;
-const LabelSty = styled.label`
+const ButtonSty = styled.button`
   &:hover {
     color: green;
   }
@@ -41,37 +41,41 @@ const DropdownForm = ({ clickedPos, clicked, handleSubmit }) => {
     <DropdownDiv display={display} clickedPos={clickedPos}>
       {/* //! change the form values*/}
       <FormDiv>
-        <p>
-          <InputSty
-            onChange={() => handleSubmit}
-            type="radio"
-            id="waldo"
-            name="fav_language"
-            value=""
-          />
-          <LabelSty onClick={() => handleSubmit()} htmlFor="waldo">
-            Waldo
-          </LabelSty>
-        </p>
-        <p>
-          <InputSty type="radio" id="greece" name="fav_language" value="" />
-          <LabelSty onClick={() => handleSubmit()} htmlFor="greece">
-            Greece
-          </LabelSty>
-        </p>
-        <p>
-          <InputSty type="radio" id="algeria" name="fav_language" value="" />
-          <LabelSty
-            onClick={() => handleSubmit()}
-            type="radio"
-            htmlFor="algeria"
-          >
-            Algeria
-          </LabelSty>
-        </p>
+        <ButtonSty value={"south-korea"} onClick={(e) => handleSubmit(e)}>
+          South Korea
+        </ButtonSty>
+        <ButtonSty value={"algeria"} onClick={(e) => handleSubmit(e)}>
+          Algeria
+        </ButtonSty>
+        <ButtonSty value={"greece"} onClick={(e) => handleSubmit(e)}>
+          Greece
+        </ButtonSty>
       </FormDiv>
     </DropdownDiv>
   );
 };
 
 export default DropdownForm;
+
+/**
+ * 
+ * 
+        <p>
+          <InputSty
+            type="radio"
+            id="south-korea"
+            name="country"
+            value="south-korea"
+          />
+          <LabelSty htmlFor="south-korea">South Korea</LabelSty>
+        </p>
+        <p>
+          <InputSty type="radio" id="greece" name="country" value="greece" />
+          <LabelSty htmlFor="greece">Greece</LabelSty>
+        </p>
+        <p>
+          <InputSty type="radio" id="algeria" name="country" value="algeria" />
+          <LabelSty htmlFor="algeria">Algeria</LabelSty>
+        </p>
+ */
+
