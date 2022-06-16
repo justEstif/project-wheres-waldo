@@ -1,23 +1,13 @@
-import styled from "styled-components";
-const HeaderDiv = styled.div`
-  position: fixed;
-  top: 0;
-  width: 100%;
-  height: 5%;
-  background-color: black;
-  color: wheat;
-
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  font-size: 50px;
-`;
-const Header = ({ countries }) => {
+import { SHeaderDiv } from "./Header.styled";
+import { Timer } from "../index";
+const Header = ({ seconds }) => {
   return (
-    <HeaderDiv>
+    <SHeaderDiv>
       <div>Header</div>
-      <div>Timer</div>
-    </HeaderDiv>
+      <div>{seconds}</div>
+
+      {/* <Timer /> */}
+    </SHeaderDiv>
   );
 };
 

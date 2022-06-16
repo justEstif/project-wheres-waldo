@@ -1,7 +1,21 @@
-import Overlay from "../components/Overlay/Overlay";
-import Image from "../components/Image/Image";
-import Header from "../components/Header/Header";
-import Pointer from "../components/Pointer/Pointer";
-import DropdownForm from "./DropdownForm/DropdownForm";
+import App from "./App/App";
+import Overlay from "./Overlay/Overlay";
+import Image from "./Image/Image";
+import Header from "./Header/Header";
+import Timer from "./Timer/Timer";
+import Pointer from "./Pointer/Pointer";
+import Option from "./Option/Option";
+import Options from "./Options/Options";
+import OptionsContainer from "./OptionsContainer/OptionsContainer";
 
-export { Pointer, Overlay, Image, DropdownForm, Header };
+export {
+  Pointer,
+  Overlay,
+  Image,
+  Header,
+  Timer,
+  Option,
+  Options,
+  OptionsContainer,
+  App,
+};

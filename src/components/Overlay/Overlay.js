@@ -1,9 +1,5 @@
-import styled from "styled-components";
-import { Pointer, DropdownForm } from "../index";
-const OverlayDiv = styled.div`
-  position: absolute;
-  z-index: 2;
-`;
+import { SOverlayDiv } from "./Overlay.styled";
+import { Pointer, OptionsContainer } from "../index";
 
 const Overlay = ({
   clicked,
@@ -13,16 +9,14 @@ const Overlay = ({
   handleSubmit,
 }) => {
   return (
-    <OverlayDiv>
+    <SOverlayDiv>
       <Pointer handleClick={handleClick} cursorPos={cursorPos}></Pointer>
-      <DropdownForm
+      <OptionsContainer
         clickedPos={clickedPos}
         handleSubmit={handleSubmit}
-        clicked={clicked}
-      ></DropdownForm>
-    </OverlayDiv>
+        clicked={clicked}></OptionsContainer>
+    </SOverlayDiv>
   );
 };
 
 export default Overlay;
-
