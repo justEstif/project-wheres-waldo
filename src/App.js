@@ -2,8 +2,8 @@ import { Fragment, useState, useEffect } from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import { rPlace } from "./assets";
 import { db } from "./firebase-config";
-import { Header, Overlay, Image } from "./components/index";
 import { getDocs, collection } from "firebase/firestore";
+import { Header, Overlay, Image } from "./components/index";
 
 const GlobalStyle = createGlobalStyle`
   html {
