@@ -35,4 +35,3 @@
 - the options should be in state, and if they are correct they will be removed from the available options
 - [ ] make the buttons in the form created by looping over the state
 - [ ] how do I keep track of the time?
-- [x] what hidden things should be in the picture

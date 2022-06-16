@@ -1,5 +1,6 @@
 import { Fragment, useState, useEffect } from "react";
 import { db } from "../../firebase-config";
+// read from the database
 import { getDocs, collection } from "firebase/firestore";
 
 import { GlobalStyle, SAppDiv } from "./App.styled";
@@ -13,6 +14,8 @@ const getCoordinates = (e) => {
   return [x, y];
 };
 
+// 
+// maybe I could nest an async function inside of it
 const getCountries = async () => {
   const countryCollectionRef = collection(db, "country-positions");
   const docs = await getDocs(countryCollectionRef);
@@ -45,6 +48,7 @@ const checkAnswer = (userPick, clickedPos, countries) => {
     }
   }
 };
+
 const App = () => {
   const [clicked, setClicked] = useState(false);
   const [cursorPos, setCursorPos] = useState([]);
@@ -80,6 +84,7 @@ const App = () => {
       setCountries(value);
       setOptions(value.map((el) => el.name));
     });
+    // start timer after db loads
     toggleTimer();
   }, []);
 
