@@ -5,17 +5,16 @@ import React, { useEffect, useState } from "react";
 // the overlay has info on what you should do in the game and what you should be looking for
 
 const Timer = () => {
+  // const Timer = ({seconds, isActive}) => {
   const [seconds, setSeconds] = useState(0);
   const [isActive, setIsActive] = useState(false);
 
-  function toggle() {
-    setIsActive(!isActive);
-  }
+  const toggle = () => setIsActive(!isActive);
 
-  function reset() {
+  const reset = () => {
     setSeconds(0);
     setIsActive(false);
-  }
+  };
 
   useEffect(() => {
     let interval = null;
@@ -37,8 +36,7 @@ const Timer = () => {
           className={`button button-primary button-primary-${
             isActive ? "active" : "inactive"
           }`}
-          onClick={toggle}
-        >
+          onClick={toggle}>
           {isActive ? "Pause" : "Start"}
         </button>
         <button className="button" onClick={reset}>

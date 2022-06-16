@@ -1,3 +1,4 @@
+import App from "./App/App";
 import Overlay from "./Overlay/Overlay";
 import Image from "./Image/Image";
 import Header from "./Header/Header";
@@ -15,5 +16,6 @@ export {
   Timer,
   Option,
   Options,
-  OptionsContainer
+  OptionsContainer,
+  App,
 };

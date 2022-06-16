@@ -1,7 +1,7 @@
 import { SOptionsDiv } from "./Options.styled";
 import { Option } from "../index";
 
-const Options = ({ clickedPos, clicked, handleSubmit }) => {
+const Options = ({ handleSubmit }) => {
   return (
     <SOptionsDiv>
       <Option
