@@ -1,10 +1,10 @@
 import { SOptionsContainerDiv } from "./OptionsContainer.styled";
 import { Options } from "../index";
 
-const OptionsContainer = ({ clickedPos, clicked, handleSubmit }) => {
+const OptionsContainer = ({ clickedPos, clicked, handleSubmit, options }) => {
   return (
     <SOptionsContainerDiv clicked={clicked} clickedPos={clickedPos}>
-      <Options handleSubmit={handleSubmit}></Options>
+      <Options options={options} handleSubmit={handleSubmit}></Options>
     </SOptionsContainerDiv>
   );
 };

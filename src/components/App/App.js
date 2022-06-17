@@ -1,5 +1,6 @@
 import { Fragment, useState, useEffect } from "react";
 import { db } from "../../firebase-config";
+
 // read from the database
 import { getDocs, collection } from "firebase/firestore";
 
@@ -14,7 +15,6 @@ const getCoordinates = (e) => {
   return [x, y];
 };
 
-// 
 // maybe I could nest an async function inside of it
 const getCountries = async () => {
   const countryCollectionRef = collection(db, "country-positions");
@@ -23,6 +23,7 @@ const getCountries = async () => {
   docs.forEach((doc) => {
     countries.push({
       name: doc.data()["name"],
+      title: doc.data()["title"],
       xMin: doc.data()["x-min"],
       xMax: doc.data()["x-max"],
       yMin: doc.data()["y-min"],
@@ -30,23 +31,6 @@ const getCountries = async () => {
     });
   });
   return countries;
-};
-
-const checkAnswer = (userPick, clickedPos, countries) => {
-  for (const country of countries) {
-    if (country.name === userPick) {
-      const correctX =
-        clickedPos[0] <= country.xMax && clickedPos[0] >= country.xMin;
-      const correctY =
-        clickedPos[1] <= country.yMax && clickedPos[1] >= country.yMin;
-      if (correctX && correctY) {
-        console.log("correct");
-      } else {
-        console.log("incorrect");
-      }
-      break;
-    }
-  }
 };
 
 const App = () => {
@@ -82,7 +66,7 @@ const App = () => {
   useEffect(() => {
     getCountries().then((value) => {
       setCountries(value);
-      setOptions(value.map((el) => el.name));
+      setOptions(value);
     });
     // start timer after db loads
     toggleTimer();
@@ -90,9 +74,27 @@ const App = () => {
 
   // ! db
 
+  const checkAnswer = (userPick, clickedPos, countries) => {
+    for (const country of countries) {
+      if (country.name === userPick) {
+        const correctX =
+          clickedPos[0] <= country.xMax && clickedPos[0] >= country.xMin;
+        const correctY =
+          clickedPos[1] <= country.yMax && clickedPos[1] >= country.yMin;
+        if (correctX && correctY) {
+          setOptions(options.filter((el) => el.name !== userPick));
+        } else {
+          console.log("incorrect");
+        }
+        break;
+      }
+    }
+  };
+
   const handleClick = () => {
     setClickedPos(cursorPos);
     setClicked(!clicked);
+    console.log(options);
   };
 
   const handleMouseOver = (e) => setCursorPos(getCoordinates(e));
