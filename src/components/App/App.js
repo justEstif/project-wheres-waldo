@@ -2,7 +2,7 @@ import { Fragment, useState, useEffect } from "react";
 import { db } from "../../firebase-config";
 
 // read from the database
-import { getDocs, collection } from "firebase/firestore";
+import { getDocs, collection, serverTimestamp } from "firebase/firestore";
 
 import { GlobalStyle, SAppDiv } from "./App.styled";
 import { rPlace } from "../../assets/index";
@@ -15,13 +15,12 @@ const getCoordinates = (e) => {
   return [x, y];
 };
 
-// maybe I could nest an async function inside of it
-const getCountries = async () => {
+const getCollection = async () => {
   const countryCollectionRef = collection(db, "country-positions");
   const docs = await getDocs(countryCollectionRef);
-  const countries = [];
+  const value = [];
   docs.forEach((doc) => {
-    countries.push({
+    value.push({
       name: doc.data()["name"],
       title: doc.data()["title"],
       xMin: doc.data()["x-min"],
@@ -30,7 +29,7 @@ const getCountries = async () => {
       yMax: doc.data()["y-max"],
     });
   });
-  return countries;
+  return value;
 };
 
 const App = () => {
@@ -40,7 +39,6 @@ const App = () => {
   const [countries, setCountries] = useState([]);
   const [options, setOptions] = useState([]);
 
-  // ! timer stuff
   const [seconds, setSeconds] = useState(0);
   const [activeTimer, setActiveTimer] = useState(false);
 
@@ -55,16 +53,16 @@ const App = () => {
       interval = setInterval(() => {
         setSeconds((seconds) => seconds + 1);
       }, 1000);
-    } else if (!activeTimer && seconds !== 0) {
+    } else if ((!activeTimer && seconds !== 0) || options.length === 0) {
       clearInterval(interval);
     }
     return () => clearInterval(interval);
-  }, [activeTimer, seconds]);
+  }, [activeTimer, seconds, options]);
   // ! timer stuff
 
   // ! db
   useEffect(() => {
-    getCountries().then((value) => {
+    getCollection().then((value) => {
       setCountries(value);
       setOptions(value);
     });
