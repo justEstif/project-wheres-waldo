@@ -2,7 +2,7 @@ import { Fragment, useState, useEffect } from "react";
 import { db } from "../../firebase-config";
 
 // read from the database
-import { getDocs, collection } from "firebase/firestore";
+import { getDocs, collection, Timestamp } from "firebase/firestore";
 
 import { GlobalStyle, SAppDiv } from "./App.styled";
 import { rPlace } from "../../assets/index";
@@ -32,18 +32,23 @@ const getCollection = async () => {
   return returnCollection;
 };
 
+const timestampNow = () => Timestamp.fromDate(new Date()).seconds;
 const App = () => {
   const [clicked, setClicked] = useState(false);
   const [cursorPos, setCursorPos] = useState([]);
   const [clickedPos, setClickedPos] = useState([]);
   const [collection, setCollection] = useState([]);
   const [options, setOptions] = useState([]);
-
+  const [startTime, setStartTime] = useState(0);
+  const [endTime, setEndTime] = useState(0);
+  // const [playingTime, setPlayingTime] = useState(0);
+  // const startTime = Timestamp.fromDate(new Date()).seconds;
   useEffect(() => {
     getCollection().then((value) => {
       setCollection(value);
       setOptions(value);
     });
+    setStartTime(timestampNow());
   }, []);
 
   const checkAnswer = (userPick) => {
@@ -54,6 +59,7 @@ const App = () => {
       clickedPos[0] <= match[0].xMax && clickedPos[0] >= match[0].xMin;
     const correctY =
       clickedPos[1] <= match[0].yMax && clickedPos[1] >= match[0].yMin;
+
     if (correctX && correctY)
       setOptions(options.filter((el) => el.name !== userPick));
     else console.log("incorrect");
