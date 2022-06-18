@@ -9,10 +9,7 @@ const SOptionButton = styled.button`
 
   padding: 5px;
   text-align: center;
-
-  // TODO change button style if correct
-  // text-decoration: line-through;
-  // pointer-events: none;
+  height: 50px;
 
   &:hover {
     border-bottom: 1px solid red;

@@ -2,11 +2,11 @@ import { Fragment, useState, useEffect } from "react";
 import { db } from "../../firebase-config";
 
 // read from the database
-import { getDocs, collection, serverTimestamp } from "firebase/firestore";
+import { getDocs, collection } from "firebase/firestore";
 
 import { GlobalStyle, SAppDiv } from "./App.styled";
 import { rPlace } from "../../assets/index";
-import { Header, Overlay, Image } from "../../components/index";
+import { Overlay, Image } from "../../components/index";
 
 const getCoordinates = (e) => {
   const bnds = e.target.getBoundingClientRect();
@@ -16,11 +16,11 @@ const getCoordinates = (e) => {
 };
 
 const getCollection = async () => {
-  const countryCollectionRef = collection(db, "country-positions");
-  const docs = await getDocs(countryCollectionRef);
-  const value = [];
+  const collectionRef = collection(db, "country-positions");
+  const docs = await getDocs(collectionRef);
+  const returnCollection = [];
   docs.forEach((doc) => {
-    value.push({
+    returnCollection.push({
       name: doc.data()["name"],
       title: doc.data()["title"],
       xMin: doc.data()["x-min"],
@@ -29,77 +29,46 @@ const getCollection = async () => {
       yMax: doc.data()["y-max"],
     });
   });
-  return value;
+  return returnCollection;
 };
 
 const App = () => {
   const [clicked, setClicked] = useState(false);
   const [cursorPos, setCursorPos] = useState([]);
   const [clickedPos, setClickedPos] = useState([]);
-  const [countries, setCountries] = useState([]);
+  const [collection, setCollection] = useState([]);
   const [options, setOptions] = useState([]);
 
-  const [seconds, setSeconds] = useState(0);
-  const [activeTimer, setActiveTimer] = useState(false);
-
-  const toggleTimer = () => setActiveTimer(!activeTimer);
-  // const resetTimer = () => {
-  //   setSeconds(0);
-  //   setActiveTimer(false);
-  // };
-  useEffect(() => {
-    let interval = null;
-    if (activeTimer) {
-      interval = setInterval(() => {
-        setSeconds((seconds) => seconds + 1);
-      }, 1000);
-    } else if ((!activeTimer && seconds !== 0) || options.length === 0) {
-      clearInterval(interval);
-    }
-    return () => clearInterval(interval);
-  }, [activeTimer, seconds, options]);
-  // ! timer stuff
-
-  // ! db
   useEffect(() => {
     getCollection().then((value) => {
-      setCountries(value);
+      setCollection(value);
       setOptions(value);
     });
-    // start timer after db loads
-    toggleTimer();
   }, []);
 
-  // ! db
-
-  const checkAnswer = (userPick, clickedPos, countries) => {
-    for (const country of countries) {
-      if (country.name === userPick) {
-        const correctX =
-          clickedPos[0] <= country.xMax && clickedPos[0] >= country.xMin;
-        const correctY =
-          clickedPos[1] <= country.yMax && clickedPos[1] >= country.yMin;
-        if (correctX && correctY) {
-          setOptions(options.filter((el) => el.name !== userPick));
-        } else {
-          console.log("incorrect");
-        }
-        break;
-      }
-    }
+  const checkAnswer = (userPick) => {
+    const match = ((userPick) =>
+      collection.filter((country) => country.name === userPick))(userPick);
+    if (!match) return;
+    const correctX =
+      clickedPos[0] <= match[0].xMax && clickedPos[0] >= match[0].xMin;
+    const correctY =
+      clickedPos[1] <= match[0].yMax && clickedPos[1] >= match[0].yMin;
+    if (correctX && correctY)
+      setOptions(options.filter((el) => el.name !== userPick));
+    else console.log("incorrect");
   };
 
   const handleClick = () => {
     setClickedPos(cursorPos);
     setClicked(!clicked);
-    console.log(options);
   };
 
   const handleMouseOver = (e) => setCursorPos(getCoordinates(e));
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    checkAnswer(e.target.value, clickedPos, countries);
+    checkAnswer(e.target.value);
     setClicked(false);
     setCursorPos([]);
   };
@@ -108,7 +77,6 @@ const App = () => {
     <Fragment>
       <GlobalStyle />
       <SAppDiv>
-        <Header seconds={seconds}></Header>
         <Overlay
           clicked={clicked}
           cursorPos={cursorPos}
@@ -116,7 +84,7 @@ const App = () => {
           clickedPos={clickedPos}
           handleSubmit={handleSubmit}
           options={options}></Overlay>
-        <Image handleMouseOver={handleMouseOver} imgSrc={rPlace}></Image>
+        <Image handleMouseOver={handleMouseOver} imgSrc={rPlace} />
       </SAppDiv>
     </Fragment>
   );

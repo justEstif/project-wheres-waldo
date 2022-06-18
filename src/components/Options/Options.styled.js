@@ -8,10 +8,9 @@ const SOptionsDiv = styled.div`
   background-color: black;
   color: white;
   width: 150px;
-  height: 150px;
   padding: 20px 40px;
 
-  // ! make not clickable
+  // stops the mouse drag (keep)
   user-select: none;
   -moz-user-select: none;
   -webkit-user-select: none;
