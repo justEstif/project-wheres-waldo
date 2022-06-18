@@ -16,17 +16,17 @@ const getCoordinates = (e) => {
 };
 
 const getCollection = async () => {
-  const collectionRef = collection(db, "country-positions");
+  const collectionRef = collection(db, "flags");
   const docs = await getDocs(collectionRef);
   const returnCollection = [];
   docs.forEach((doc) => {
     returnCollection.push({
       name: doc.data()["name"],
       title: doc.data()["title"],
-      xMin: doc.data()["x-min"],
-      xMax: doc.data()["x-max"],
-      yMin: doc.data()["y-min"],
-      yMax: doc.data()["y-max"],
+      xMin: doc.data()["xMin"],
+      xMax: doc.data()["xMax"],
+      yMin: doc.data()["yMin"],
+      yMax: doc.data()["yMax"],
     });
   });
   return returnCollection;
@@ -47,7 +47,7 @@ const App = () => {
   }, []);
 
   const checkAnswer = (userPick) => {
-    const match = ((userPick) =>
+    let match = ((userPick) =>
       collection.filter((country) => country.name === userPick))(userPick);
     if (!match) return;
     const correctX =
