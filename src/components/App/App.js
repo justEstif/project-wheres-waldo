@@ -67,7 +67,6 @@ const App = () => {
   const handleMouseOver = (e) => setCursorPos(getCoordinates(e));
 
   const handleSubmit = (e) => {
-    e.preventDefault();
     checkAnswer(e.target.value);
     setClicked(false);
     setCursorPos([]);

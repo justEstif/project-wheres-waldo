@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import { SPointerDiv } from "./Pointer.styled";
 
 const Pointer = ({ cursorPos, handleClick }) => {
