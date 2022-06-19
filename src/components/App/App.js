@@ -12,7 +12,7 @@ import {
 
 import { GlobalStyle, SAppDiv } from "./App.styled";
 import { rPlace } from "../../assets/index";
-import { Overlay, Image } from "../../components/index";
+import { Header, Overlay, Image } from "../../components/index";
 
 const getCoordinates = (e) => {
   const bnds = e.target.getBoundingClientRect();
@@ -39,7 +39,7 @@ const getCollection = async () => {
 };
 
 // const getTime = () => Date.now()
-const getTime = () => Timestamp.now()
+const getTime = () => Timestamp.now();
 
 const App = () => {
   const [clicked, setClicked] = useState(false);
@@ -48,14 +48,16 @@ const App = () => {
   const [dbCollection, setDbCollection] = useState([]);
   const [options, setOptions] = useState([""]);
 
-  const [userData, setUserData] = useState({ startTime: getTime() });
+  const [userData, setUserData] = useState({
+    startTime: getTime(),
+    endTime: getTime(),
+  });
 
   useEffect(() => {
     getCollection().then((value) => {
       setDbCollection(value);
       setOptions(value);
       // setUserData(prev => ({ ...prev, startTime: getTime() }))
-
     });
   }, []);
 
@@ -64,14 +66,15 @@ const App = () => {
     const addToDoc = async () => await setDoc(userRef, userData);
 
     if (options.length === 0) {
-      setUserData(prev => ({ ...prev, endTime: getTime() }))
-      addToDoc()
-      console.log(userData)
+      setUserData((prev) => ({ ...prev, endTime: getTime() }));
+      // ! adds to the db
+      // addToDoc();
+      console.log(userData);
       return () => {
-        setOptions([""])
-      }
+        setOptions([""]);
+      };
     }
-  })
+  });
 
   // TODO complete
 
@@ -108,6 +111,10 @@ const App = () => {
     <Fragment>
       <GlobalStyle />
       <SAppDiv>
+        {/**
+         * can't pass these values to header
+         * <Header start={userData.startTime} end={userData.endTime} />
+         */}
         <Overlay
           clicked={clicked}
           cursorPos={cursorPos}
