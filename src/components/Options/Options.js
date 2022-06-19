@@ -3,22 +3,22 @@ import { SOptionsDiv } from "./Options.styled";
 import { Option } from "../index";
 import { Fragment, useEffect, useState } from "react";
 
-const createOptions = (result, handleSubmit) => {
-  const allOptions = result.map((res) => {
+const createOptions = (options, handleSubmit) => {
+  const allOptions = options.map((el) => {
     return (
       <Fragment key={uid()}>
-        <Option title={res.title} value={res.name} handleClick={handleSubmit} />
+        <Option title={el.title} value={el.name} handleClick={handleSubmit} />
       </Fragment>
     );
   });
   return allOptions;
 };
 const Options = ({ handleSubmit, options }) => {
-  const [result, setResult] = useState(options);
-  useEffect(() => {
-    setResult(options);
-  }, [options]);
-  return <SOptionsDiv>{createOptions(result, handleSubmit)}</SOptionsDiv>;
+  // const [result, setResult] = useState(options);
+  // useEffect(() => {
+  //   setResult(options);
+  // }, [options]);
+  return <SOptionsDiv>{createOptions(options, handleSubmit)}</SOptionsDiv>;
 };
 
 export default Options;

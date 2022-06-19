@@ -2,11 +2,17 @@ import { Fragment, useState, useEffect } from "react";
 import { db } from "../../firebase-config";
 
 // read from the database
-import { getDocs, collection } from "firebase/firestore";
+import {
+  getDocs,
+  collection,
+  Timestamp,
+  setDoc,
+  doc,
+} from "firebase/firestore";
 
 import { GlobalStyle, SAppDiv } from "./App.styled";
 import { rPlace } from "../../assets/index";
-import { Overlay, Image } from "../../components/index";
+import { Header, Overlay, Image } from "../../components/index";
 
 const getCoordinates = (e) => {
   const bnds = e.target.getBoundingClientRect();
@@ -32,31 +38,56 @@ const getCollection = async () => {
   return returnCollection;
 };
 
+// const getTime = () => Date.now()
+const getTime = () => Timestamp.now();
+
 const App = () => {
   const [clicked, setClicked] = useState(false);
   const [cursorPos, setCursorPos] = useState([]);
   const [clickedPos, setClickedPos] = useState([]);
-  const [collection, setCollection] = useState([]);
-  const [options, setOptions] = useState([]);
+  const [dbCollection, setDbCollection] = useState([]);
+  const [options, setOptions] = useState([""]);
+
+  const userRef = doc(collection(db, "users"));
+  const addToDoc = async () => await setDoc(userRef, userData);
+
+  const [userData, setUserData] = useState({
+    startTime: getTime(),
+    endTime: getTime(),
+  });
 
   useEffect(() => {
     getCollection().then((value) => {
-      setCollection(value);
+      setDbCollection(value);
       setOptions(value);
     });
   }, []);
 
+  useEffect(() => {
+    if (options.length === 0) {
+      setUserData((prev) => ({ ...prev, endTime: getTime() }));
+      // ! adds to the db
+      addToDoc();
+      setOptions([""]);
+    }
+  });
+
+  // TODO complete
+
   const checkAnswer = (userPick) => {
     let match = ((userPick) =>
-      collection.filter((country) => country.name === userPick))(userPick);
-    if (!match) return;
+      dbCollection.filter((country) => country.name === userPick))(userPick);
+
     const correctX =
       clickedPos[0] <= match[0].xMax && clickedPos[0] >= match[0].xMin;
     const correctY =
       clickedPos[1] <= match[0].yMax && clickedPos[1] >= match[0].yMin;
-    if (correctX && correctY)
+
+    if (correctX && correctY) {
       setOptions(options.filter((el) => el.name !== userPick));
-    else console.log("incorrect");
+    } else {
+      console.log("incorrect");
+    }
   };
 
   const handleClick = () => {
@@ -76,6 +107,10 @@ const App = () => {
     <Fragment>
       <GlobalStyle />
       <SAppDiv>
+        {/**
+         * can't pass these values to header
+         * <Header start={userData.startTime} end={userData.endTime} />
+         */}
         <Overlay
           clicked={clicked}
           cursorPos={cursorPos}
@@ -87,6 +122,6 @@ const App = () => {
       </SAppDiv>
     </Fragment>
   );
-};
+};;;;;;;;;;;;;;;;;;;;;;;;;
 
 export default App;
