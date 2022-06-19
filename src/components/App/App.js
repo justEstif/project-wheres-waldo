@@ -48,6 +48,9 @@ const App = () => {
   const [dbCollection, setDbCollection] = useState([]);
   const [options, setOptions] = useState([""]);
 
+  const userRef = doc(collection(db, "users"));
+  const addToDoc = async () => await setDoc(userRef, userData);
+
   const [userData, setUserData] = useState({
     startTime: getTime(),
     endTime: getTime(),
@@ -57,22 +60,15 @@ const App = () => {
     getCollection().then((value) => {
       setDbCollection(value);
       setOptions(value);
-      // setUserData(prev => ({ ...prev, startTime: getTime() }))
     });
   }, []);
 
   useEffect(() => {
-    const userRef = doc(collection(db, "users"));
-    const addToDoc = async () => await setDoc(userRef, userData);
-
     if (options.length === 0) {
       setUserData((prev) => ({ ...prev, endTime: getTime() }));
       // ! adds to the db
-      // addToDoc();
-      console.log(userData);
-      return () => {
-        setOptions([""]);
-      };
+      addToDoc();
+      setOptions([""]);
     }
   });
 
