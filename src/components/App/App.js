@@ -2,7 +2,13 @@ import { Fragment, useState, useEffect } from "react";
 import { db } from "../../firebase-config";
 
 // read from the database
-import { getDocs, collection, Timestamp } from "firebase/firestore";
+import {
+  getDocs,
+  collection,
+  Timestamp,
+  setDoc,
+  doc,
+} from "firebase/firestore";
 
 import { GlobalStyle, SAppDiv } from "./App.styled";
 import { rPlace } from "../../assets/index";
@@ -15,6 +21,7 @@ const getCoordinates = (e) => {
   return [x, y];
 };
 
+// ! snapshot db
 const getCollection = async () => {
   const collectionRef = collection(db, "flags");
   const docs = await getDocs(collectionRef);
@@ -32,37 +39,65 @@ const getCollection = async () => {
   return returnCollection;
 };
 
-const timestampNow = () => Timestamp.fromDate(new Date()).seconds;
 const App = () => {
   const [clicked, setClicked] = useState(false);
   const [cursorPos, setCursorPos] = useState([]);
   const [clickedPos, setClickedPos] = useState([]);
-  const [collection, setCollection] = useState([]);
-  const [options, setOptions] = useState([]);
-  const [startTime, setStartTime] = useState(0);
-  const [endTime, setEndTime] = useState(0);
-  // const [playingTime, setPlayingTime] = useState(0);
-  // const startTime = Timestamp.fromDate(new Date()).seconds;
+  const [dbCollection, setDbCollection] = useState([]);
+  const [options, setOptions] = useState([""]);
+
+  const [missingCount, setMissingCount] = useState();
+  const [userData, setUserData] = useState({
+    name: "",
+    startTime: "",
+    endTime: "",
+  });
+
+  const userRef = doc(collection(db, "users"));
+  const addToDoc = async () => await setDoc(userRef, userData);
+  // console.log(userRef.id);
+  console.log("objechellot");
+
+  //
   useEffect(() => {
     getCollection().then((value) => {
-      setCollection(value);
+      setDbCollection(value);
       setOptions(value);
+      setUserData((prevState) => ({
+        ...prevState,
+        startTime: Timestamp.now(),
+      }));
+      setMissingCount(options.length);
     });
-    setStartTime(timestampNow());
   }, []);
+
+  // ! set the end time
+  useEffect(() => {
+    if (missingCount === 0) {
+      setUserData((prevState) => ({
+        ...prevState,
+        endTime: Timestamp.now(),
+      }));
+
+      addToDoc();
+    }
+  }, [missingCount]);
 
   const checkAnswer = (userPick) => {
     let match = ((userPick) =>
-      collection.filter((country) => country.name === userPick))(userPick);
-    if (!match) return;
+      dbCollection.filter((country) => country.name === userPick))(userPick);
+
     const correctX =
       clickedPos[0] <= match[0].xMax && clickedPos[0] >= match[0].xMin;
     const correctY =
       clickedPos[1] <= match[0].yMax && clickedPos[1] >= match[0].yMin;
 
-    if (correctX && correctY)
+    if (correctX && correctY) {
       setOptions(options.filter((el) => el.name !== userPick));
-    else console.log("incorrect");
+      setMissingCount((curr) => curr - 1);
+    } else {
+      console.log("incorrect");
+    }
   };
 
   const handleClick = () => {
@@ -93,6 +128,6 @@ const App = () => {
       </SAppDiv>
     </Fragment>
   );
-};
+};;;;;;;;;;;;;;;;;;;;;;;;;
 
 export default App;
