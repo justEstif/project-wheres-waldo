@@ -52,8 +52,8 @@ const App = () => {
   const addToDoc = async () => await setDoc(userRef, userData);
 
   const [userData, setUserData] = useState({
+    user: "user",
     startTime: getTime(),
-    endTime: getTime(),
   });
 
   useEffect(() => {
@@ -68,9 +68,11 @@ const App = () => {
       setUserData((prev) => ({ ...prev, endTime: getTime() }));
       // ! adds to the db
       addToDoc();
-      setOptions([""]);
+      return () => {
+        setOptions([""]);
+      };
     }
-  });
+  }, [options]);
 
   // TODO complete
 
@@ -122,6 +124,6 @@ const App = () => {
       </SAppDiv>
     </Fragment>
   );
-};;;;;;;;;;;;;;;;;;;;;;;;;
+};
 
 export default App;
