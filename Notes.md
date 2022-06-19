@@ -34,3 +34,4 @@
 - [ ] maybe the timer could be the difference between when the Timestamp starts, and the last country is found
 - the options should be in state, and if they are correct they will be removed from the available options
 - [ ] how do I keep track of the time?
+

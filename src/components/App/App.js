@@ -21,7 +21,6 @@ const getCoordinates = (e) => {
   return [x, y];
 };
 
-// ! snapshot db
 const getCollection = async () => {
   const collectionRef = collection(db, "flags");
   const docs = await getDocs(collectionRef);
@@ -39,6 +38,9 @@ const getCollection = async () => {
   return returnCollection;
 };
 
+// const getTime = () => Date.now()
+const getTime = () => Timestamp.now()
+
 const App = () => {
   const [clicked, setClicked] = useState(false);
   const [cursorPos, setCursorPos] = useState([]);
@@ -46,42 +48,32 @@ const App = () => {
   const [dbCollection, setDbCollection] = useState([]);
   const [options, setOptions] = useState([""]);
 
-  const [missingCount, setMissingCount] = useState();
-  const [userData, setUserData] = useState({
-    name: "",
-    startTime: "",
-    endTime: "",
-  });
+  const [userData, setUserData] = useState({ startTime: getTime() });
 
-  const userRef = doc(collection(db, "users"));
-  const addToDoc = async () => await setDoc(userRef, userData);
-  // console.log(userRef.id);
-  console.log("objechellot");
-
-  //
   useEffect(() => {
     getCollection().then((value) => {
       setDbCollection(value);
       setOptions(value);
-      setUserData((prevState) => ({
-        ...prevState,
-        startTime: Timestamp.now(),
-      }));
-      setMissingCount(options.length);
+      // setUserData(prev => ({ ...prev, startTime: getTime() }))
+
     });
   }, []);
 
-  // ! set the end time
   useEffect(() => {
-    if (missingCount === 0) {
-      setUserData((prevState) => ({
-        ...prevState,
-        endTime: Timestamp.now(),
-      }));
+    const userRef = doc(collection(db, "users"));
+    const addToDoc = async () => await setDoc(userRef, userData);
 
-      addToDoc();
+    if (options.length === 0) {
+      setUserData(prev => ({ ...prev, endTime: getTime() }))
+      addToDoc()
+      console.log(userData)
+      return () => {
+        setOptions([""])
+      }
     }
-  }, [missingCount]);
+  })
+
+  // TODO complete
 
   const checkAnswer = (userPick) => {
     let match = ((userPick) =>
@@ -94,7 +86,6 @@ const App = () => {
 
     if (correctX && correctY) {
       setOptions(options.filter((el) => el.name !== userPick));
-      setMissingCount((curr) => curr - 1);
     } else {
       console.log("incorrect");
     }
