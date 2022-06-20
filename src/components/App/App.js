@@ -5,9 +5,8 @@ import {
   getDocs,
   collection,
   Timestamp,
-  setDoc,
   doc,
-  updateDoc,
+  setDoc,
 } from "firebase/firestore";
 
 import { GlobalStyle, SAppDiv } from "./App.styled";
@@ -38,7 +37,6 @@ const getCollection = async () => {
   return returnCollection;
 };
 
-// const getTime = () => Date.now()
 const getTimestamp = () => Timestamp.now();
 
 const App = () => {
@@ -47,41 +45,27 @@ const App = () => {
   const [clickedPos, setClickedPos] = useState([]);
   const [dbCollection, setDbCollection] = useState([]);
   const [options, setOptions] = useState([""]);
-  const [startTime, setStartTime] = useState();
-  const [endTime, setEndTime] = useState();
-  const [userName, setUserName] = useState("");
   const userDataRef = doc(collection(db, "users"));
+  const [userData, setUserdata] = useState({
+    userName: "",
+    startTime: "",
+    endTime: "",
+  });
 
   useEffect(() => {
     getCollection().then((value) => {
       setDbCollection(value);
       setOptions(value);
-      setStartTime(getTimestamp());
+      setUserdata((prev) => ({ ...prev, startTime: getTimestamp() }));
     });
   }, []);
 
-  const addToDoc = async (userData) => await setDoc(userDataRef, userData);
-  const addUserNameToDoc = async (userName) =>
-    await updateDoc(userDataRef, userName);
   useEffect(() => {
     if (options.length === 0) {
-      setEndTime(getTimestamp());
-
-      if (endTime) {
-        try {
-          addToDoc({ startTime, endTime });
-        } catch (e) {
-          console.log(e);
-        }
-      }
-
-      return () => {
-        setOptions([""]);
-        setStartTime();
-        setEndTime();
-      };
+      setUserdata((prev) => ({ ...prev, endTime: getTimestamp() }));
+      setOptions([""]);
     }
-  }, [options.length, startTime, endTime, userDataRef, addToDoc]);
+  }, [options]);
 
   const checkAnswer = (userPick) => {
     const [clickedPosX, clickedPosY] = clickedPos;
@@ -111,32 +95,44 @@ const App = () => {
     setClicked(false);
     setCursorPos([]);
   };
+  const emptyUserData = () =>
+    setUserdata({
+      startTime: "",
+      endTime: "",
+      userName: "",
+    });
 
-  const handleUserNameChange = (e) => {
-    setUserName(e.target.value);
-  };
+  const isUserDataEmpty = () =>
+    !Object.values(userData).some((el) => el === "");
+
+  const handleUserNameChange = (e) =>
+    setUserdata((prev) => ({ ...prev, userName: e.target.value }));
 
   const handleUserNameSubmit = (e) => {
+    const addDoc = async () => {
+      if (!isUserDataEmpty()) await setDoc(userDataRef, userData);
+    };
+
     e.preventDefault();
-    addUserNameToDoc({ userName });
-    setUserName("");
-    // move to the next page
+    emptyUserData();
+    addDoc();
   };
+
   return (
     <Fragment>
       <GlobalStyle />
       <SAppDiv>
         <Header />
         <Overlay
-          handleUserNameChange={handleUserNameChange}
-          handleUserNameSubmit={handleUserNameSubmit}
           clicked={clicked}
           cursorPos={cursorPos}
           handleMouseClick={handleMouseClick}
           clickedPos={clickedPos}
           handleOptionClick={handleOptionClick}
-          userName={userName}
-          options={options}></Overlay>
+          options={options}
+          userName={userData.userName}
+          handleUserNameChange={handleUserNameChange}
+          handleUserNameSubmit={handleUserNameSubmit}></Overlay>
         <Image handleMouseOver={handleMouseOver} imgSrc={rPlace} />
       </SAppDiv>
     </Fragment>

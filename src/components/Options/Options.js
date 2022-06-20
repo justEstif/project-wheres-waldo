@@ -30,7 +30,6 @@ const Options = ({
         <input
           type="text"
           name="userName"
-          value={userName}
           onChange={(e) => handleUserNameChange(e)}
         />
       </form>

@@ -19,7 +19,7 @@ const Overlay = ({
         cursorPos={cursorPos}></Pointer>
       <OptionsContainer
         handleUserNameChange={handleUserNameChange}
-      handleUserNameSubmit={handleUserNameSubmit}
+        handleUserNameSubmit={handleUserNameSubmit}
         options={options}
         clickedPos={clickedPos}
         handleOptionClick={handleOptionClick}
