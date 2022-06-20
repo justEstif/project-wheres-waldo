@@ -1,4 +1,4 @@
-const countries = [
+const dbCollection = [
   { name: "a", xMin: 1, xMax: 5, yMin: 1, yMax: 8 },
   { name: "b", xMin: 2, xMax: 6, yMin: 2, yMax: 9 },
   { name: "c", xMin: 3, xMax: 8, yMin: 1, yMax: 8 },
@@ -8,14 +8,17 @@ const countries = [
 const clickedPos = [2, 3];
 
 const checkAnswer = (userPick) => {
-  const match = ((userPick) =>
-    countries.filter((country) => country.name === userPick))(userPick);
-  if (!match) return;
-  const correctX =
-    clickedPos[0] <= match[0].xMax && clickedPos[0] >= match[0].xMin;
-  const correctY =
-    clickedPos[1] <= match[0].yMax && clickedPos[1] >= match[0].yMin;
-  if (correctX && correctY) console.log("correct");
-};
+  const [clickedPosX, clickedPosY] = clickedPos;
+  let dbMatch = ((userPick) =>
+    dbCollection.filter((doc) => doc.name === userPick))(userPick)[0];
 
+  const correctX = clickedPosX <= dbMatch.xMax && clickedPosX >= dbMatch.xMin;
+  const correctY = clickedPosY <= dbMatch.yMax && clickedPosY >= dbMatch.yMin;
+
+  if (correctX && correctY) {
+    console.log("correct");
+  } else {
+    console.log("incorrect");
+  }
+};
 checkAnswer("a");

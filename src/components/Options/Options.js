@@ -14,10 +14,9 @@ const createOptions = (options, handleSubmit) => {
   return allOptions;
 };
 const Options = ({ handleSubmit, options }) => {
-  // const [result, setResult] = useState(options);
-  // useEffect(() => {
-  //   setResult(options);
-  // }, [options]);
+  if (options[0] === "") {
+    return <div></div>;
+  }
   return <SOptionsDiv>{createOptions(options, handleSubmit)}</SOptionsDiv>;
 };
 
