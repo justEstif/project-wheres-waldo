@@ -1,8 +1,8 @@
 import { SOptionButton } from "./Option.styled";
 
-const Option = ({ title, value, handleClick }) => {
+const Option = ({ title, value, handleOptionClick }) => {
   return (
-    <SOptionButton value={value} onClick={handleClick}>
+    <SOptionButton value={value} onClick={handleOptionClick}>
       {title}
     </SOptionButton>
   );

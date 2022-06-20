@@ -7,6 +7,7 @@ import {
   Timestamp,
   setDoc,
   doc,
+  updateDoc,
 } from "firebase/firestore";
 
 import { GlobalStyle, SAppDiv } from "./App.styled";
@@ -59,9 +60,10 @@ const App = () => {
     });
   }, []);
 
+  const addToDoc = async (userData) => await setDoc(userDataRef, userData);
+  const addUserNameToDoc = async (userName) =>
+    await updateDoc(userDataRef, userName);
   useEffect(() => {
-    const addToDoc = async (userData) => await setDoc(userDataRef, userData);
-
     if (options.length === 0) {
       setEndTime(getTimestamp());
 
@@ -79,7 +81,7 @@ const App = () => {
         setEndTime();
       };
     }
-  }, [options.length, startTime, endTime, userDataRef]);
+  }, [options.length, startTime, endTime, userDataRef, addToDoc]);
 
   const checkAnswer = (userPick) => {
     const [clickedPosX, clickedPosY] = clickedPos;
@@ -97,30 +99,42 @@ const App = () => {
     }
   };
 
-  const handleClick = () => {
+  const handleMouseClick = () => {
     setClickedPos(cursorPos);
     setClicked(!clicked);
   };
 
   const handleMouseOver = (e) => setCursorPos(getCoordinates(e));
 
-  const handleSubmit = (e) => {
+  const handleOptionClick = (e) => {
     checkAnswer(e.target.value);
     setClicked(false);
     setCursorPos([]);
   };
 
+  const handleUserNameChange = (e) => {
+    setUserName(e.target.value);
+  };
+
+  const handleUserNameSubmit = (e) => {
+    e.preventDefault();
+    addUserNameToDoc({ userName });
+    setUserName("");
+    // move to the next page
+  };
   return (
     <Fragment>
       <GlobalStyle />
       <SAppDiv>
         <Header />
         <Overlay
+          handleUserNameChange={handleUserNameChange}
+          handleUserNameSubmit={handleUserNameSubmit}
           clicked={clicked}
           cursorPos={cursorPos}
-          handleClick={handleClick}
+          handleMouseClick={handleMouseClick}
           clickedPos={clickedPos}
-          handleSubmit={handleSubmit}
+          handleOptionClick={handleOptionClick}
           userName={userName}
           options={options}></Overlay>
         <Image handleMouseOver={handleMouseOver} imgSrc={rPlace} />

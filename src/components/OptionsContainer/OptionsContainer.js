@@ -4,15 +4,19 @@ import { Options } from "../index";
 const OptionsContainer = ({
   clickedPos,
   clicked,
-  handleSubmit,
+  handleOptionClick,
   options,
   userName,
+  handleUserNameChange,
+  handleUserNameSubmit,
 }) => {
   return (
     <SOptionsContainerDiv clicked={clicked} clickedPos={clickedPos}>
       <Options
         options={options}
-        handleSubmit={handleSubmit}
+        handleUserNameChange={handleUserNameChange}
+      handleUserNameSubmit={handleUserNameSubmit}
+        handleOptionClick={handleOptionClick}
         userName={userName}></Options>
     </SOptionsContainerDiv>
   );
