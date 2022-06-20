@@ -11,8 +11,8 @@
           - [ ] an error message
         - [ ] if correct =>
           - [ ] place a marker on the photo in the character's location
-          - [ ] remove the targeting box until the user clicks again
-          - [ ] remove the selected correct answer from options
+          - [x] remove the targeting box until the user clicks again
+          - [x] remove the selected correct answer from options
     - [ ] keep track of how long it takes between when the photo is first loaded and when the user finally identifies all characters
       - do this on the server side
       - [ ] once a round is complete, ask the user for his/her name and record that time.

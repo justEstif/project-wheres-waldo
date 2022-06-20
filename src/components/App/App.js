@@ -48,7 +48,7 @@ const App = () => {
   const [options, setOptions] = useState([""]);
   const [startTime, setStartTime] = useState();
   const [endTime, setEndTime] = useState();
-
+  const [userName, setUserName] = useState("");
   const userDataRef = doc(collection(db, "users"));
 
   useEffect(() => {
@@ -121,6 +121,7 @@ const App = () => {
           handleClick={handleClick}
           clickedPos={clickedPos}
           handleSubmit={handleSubmit}
+          userName={userName}
           options={options}></Overlay>
         <Image handleMouseOver={handleMouseOver} imgSrc={rPlace} />
       </SAppDiv>

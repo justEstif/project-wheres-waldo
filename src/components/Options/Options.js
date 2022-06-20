@@ -1,7 +1,7 @@
 import { uid } from "uid";
 import { SOptionsDiv } from "./Options.styled";
 import { Option } from "../index";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment } from "react";
 
 const createOptions = (options, handleSubmit) => {
   const allOptions = options.map((el) => {
@@ -13,9 +13,14 @@ const createOptions = (options, handleSubmit) => {
   });
   return allOptions;
 };
-const Options = ({ handleSubmit, options }) => {
+const Options = ({ handleSubmit, options, userName }) => {
   if (options[0] === "") {
-    return <div></div>;
+    return (
+      <form>
+        <input type="text" name="userName" value={userName} />
+        <button type="submit">submit score</button>
+      </form>
+    );
   }
   return <SOptionsDiv>{createOptions(options, handleSubmit)}</SOptionsDiv>;
 };
