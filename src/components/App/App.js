@@ -64,6 +64,7 @@ const App = () => {
     if (options.length === 0) {
       setUserdata((prev) => ({ ...prev, endTime: getTimestamp() }));
       setOptions([""]);
+      setClicked(true);
     }
   }, [options]);
 
@@ -72,10 +73,12 @@ const App = () => {
     let dbMatch = ((userPick) =>
       dbCollection.filter((doc) => doc.name === userPick))(userPick)[0];
 
-    const correctX = clickedPosX <= dbMatch.xMax && clickedPosX >= dbMatch.xMin;
-    const correctY = clickedPosY <= dbMatch.yMax && clickedPosY >= dbMatch.yMin;
+    const matchingXPos =
+      clickedPosX <= dbMatch.xMax && clickedPosX >= dbMatch.xMin;
+    const matchingYPos =
+      clickedPosY <= dbMatch.yMax && clickedPosY >= dbMatch.yMin;
 
-    if (correctX && correctY) {
+    if (matchingXPos && matchingYPos) {
       setOptions(options.filter((el) => el.name !== userPick));
       console.log("correct");
     } else {
@@ -103,7 +106,7 @@ const App = () => {
     });
 
   const isUserDataEmpty = () =>
-    !Object.values(userData).some((el) => el === "");
+    Object.values(userData).every((el) => el === "");
 
   const handleUserNameChange = (e) =>
     setUserdata((prev) => ({ ...prev, userName: e.target.value }));
@@ -114,8 +117,10 @@ const App = () => {
     };
 
     e.preventDefault();
-    emptyUserData();
     addDoc();
+    console.log(Math.floor(userData.endTime - userData.startTime));
+    emptyUserData();
+    setClicked(false);
   };
 
   return (

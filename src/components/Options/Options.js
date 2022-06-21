@@ -20,7 +20,6 @@ const createOptions = (options, handleOptionClick) => {
 const Options = ({
   handleOptionClick,
   options,
-  userName,
   handleUserNameChange,
   handleUserNameSubmit,
 }) => {
@@ -30,6 +29,7 @@ const Options = ({
         <input
           type="text"
           name="userName"
+          placeholder="register name to scoreboard"
           onChange={(e) => handleUserNameChange(e)}
         />
       </form>
