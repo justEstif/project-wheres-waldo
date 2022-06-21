@@ -5,8 +5,8 @@ import {
   getDocs,
   collection,
   Timestamp,
-  setDoc,
   doc,
+  setDoc,
 } from "firebase/firestore";
 
 import { GlobalStyle, SAppDiv } from "./App.styled";
@@ -37,7 +37,6 @@ const getCollection = async () => {
   return returnCollection;
 };
 
-// const getTime = () => Date.now()
 const getTimestamp = () => Timestamp.now();
 
 const App = () => {
@@ -46,50 +45,40 @@ const App = () => {
   const [clickedPos, setClickedPos] = useState([]);
   const [dbCollection, setDbCollection] = useState([]);
   const [options, setOptions] = useState([""]);
-  const [startTime, setStartTime] = useState();
-  const [endTime, setEndTime] = useState();
-
   const userDataRef = doc(collection(db, "users"));
+  const [userData, setUserdata] = useState({
+    userName: "",
+    startTime: "",
+    endTime: "",
+  });
 
   useEffect(() => {
     getCollection().then((value) => {
       setDbCollection(value);
       setOptions(value);
-      setStartTime(getTimestamp());
+      setUserdata((prev) => ({ ...prev, startTime: getTimestamp() }));
     });
   }, []);
 
   useEffect(() => {
-    const addToDoc = async (userData) => await setDoc(userDataRef, userData);
-
     if (options.length === 0) {
-      setEndTime(getTimestamp());
-
-      if (endTime) {
-        try {
-          addToDoc({ startTime, endTime });
-        } catch (e) {
-          console.log(e);
-        }
-      }
-
-      return () => {
-        setOptions([""]);
-        setStartTime();
-        setEndTime();
-      };
+      setUserdata((prev) => ({ ...prev, endTime: getTimestamp() }));
+      setOptions([""]);
+      setClicked(true);
     }
-  }, [options.length, startTime, endTime, userDataRef]);
+  }, [options]);
 
   const checkAnswer = (userPick) => {
     const [clickedPosX, clickedPosY] = clickedPos;
     let dbMatch = ((userPick) =>
       dbCollection.filter((doc) => doc.name === userPick))(userPick)[0];
 
-    const correctX = clickedPosX <= dbMatch.xMax && clickedPosX >= dbMatch.xMin;
-    const correctY = clickedPosY <= dbMatch.yMax && clickedPosY >= dbMatch.yMin;
+    const matchingXPos =
+      clickedPosX <= dbMatch.xMax && clickedPosX >= dbMatch.xMin;
+    const matchingYPos =
+      clickedPosY <= dbMatch.yMax && clickedPosY >= dbMatch.yMin;
 
-    if (correctX && correctY) {
+    if (matchingXPos && matchingYPos) {
       setOptions(options.filter((el) => el.name !== userPick));
       console.log("correct");
     } else {
@@ -97,17 +86,41 @@ const App = () => {
     }
   };
 
-  const handleClick = () => {
+  const handleMouseClick = () => {
     setClickedPos(cursorPos);
     setClicked(!clicked);
   };
 
   const handleMouseOver = (e) => setCursorPos(getCoordinates(e));
 
-  const handleSubmit = (e) => {
+  const handleOptionClick = (e) => {
     checkAnswer(e.target.value);
     setClicked(false);
     setCursorPos([]);
+  };
+  const emptyUserData = () =>
+    setUserdata({
+      startTime: "",
+      endTime: "",
+      userName: "",
+    });
+
+  const isUserDataEmpty = () =>
+    Object.values(userData).every((el) => el === "");
+
+  const handleUserNameChange = (e) =>
+    setUserdata((prev) => ({ ...prev, userName: e.target.value }));
+
+  const handleUserNameSubmit = (e) => {
+    const addDoc = async () => {
+      if (!isUserDataEmpty()) await setDoc(userDataRef, userData);
+    };
+
+    e.preventDefault();
+    addDoc();
+    console.log(Math.floor(userData.endTime - userData.startTime));
+    emptyUserData();
+    setClicked(false);
   };
 
   return (
@@ -118,10 +131,13 @@ const App = () => {
         <Overlay
           clicked={clicked}
           cursorPos={cursorPos}
-          handleClick={handleClick}
+          handleMouseClick={handleMouseClick}
           clickedPos={clickedPos}
-          handleSubmit={handleSubmit}
-          options={options}></Overlay>
+          handleOptionClick={handleOptionClick}
+          options={options}
+          userName={userData.userName}
+          handleUserNameChange={handleUserNameChange}
+          handleUserNameSubmit={handleUserNameSubmit}></Overlay>
         <Image handleMouseOver={handleMouseOver} imgSrc={rPlace} />
       </SAppDiv>
     </Fragment>

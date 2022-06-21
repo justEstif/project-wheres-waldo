@@ -1,23 +1,41 @@
 import { uid } from "uid";
 import { SOptionsDiv } from "./Options.styled";
 import { Option } from "../index";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment } from "react";
 
-const createOptions = (options, handleSubmit) => {
+const createOptions = (options, handleOptionClick) => {
   const allOptions = options.map((el) => {
     return (
       <Fragment key={uid()}>
-        <Option title={el.title} value={el.name} handleClick={handleSubmit} />
+        <Option
+          title={el.title}
+          value={el.name}
+          handleOptionClick={handleOptionClick}
+        />
       </Fragment>
     );
   });
   return allOptions;
 };
-const Options = ({ handleSubmit, options }) => {
+const Options = ({
+  handleOptionClick,
+  options,
+  handleUserNameChange,
+  handleUserNameSubmit,
+}) => {
   if (options[0] === "") {
-    return <div></div>;
+    return (
+      <form onSubmit={handleUserNameSubmit}>
+        <input
+          type="text"
+          name="userName"
+          placeholder="register name to scoreboard"
+          onChange={(e) => handleUserNameChange(e)}
+        />
+      </form>
+    );
   }
-  return <SOptionsDiv>{createOptions(options, handleSubmit)}</SOptionsDiv>;
+  return <SOptionsDiv>{createOptions(options, handleOptionClick)}</SOptionsDiv>;
 };
 
 export default Options;

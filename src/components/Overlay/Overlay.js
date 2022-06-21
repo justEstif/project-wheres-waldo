@@ -5,17 +5,25 @@ const Overlay = ({
   clicked,
   cursorPos,
   clickedPos,
-  handleClick,
-  handleSubmit,
+  handleMouseClick,
+  handleOptionClick,
   options,
+  userName,
+  handleUserNameChange,
+  handleUserNameSubmit,
 }) => {
   return (
     <SOverlayDiv>
-      <Pointer handleClick={handleClick} cursorPos={cursorPos}></Pointer>
+      <Pointer
+        handleMouseClick={handleMouseClick}
+        cursorPos={cursorPos}></Pointer>
       <OptionsContainer
+        handleUserNameChange={handleUserNameChange}
+        handleUserNameSubmit={handleUserNameSubmit}
         options={options}
         clickedPos={clickedPos}
-        handleSubmit={handleSubmit}
+        handleOptionClick={handleOptionClick}
+        userName={userName}
         clicked={clicked}></OptionsContainer>
     </SOverlayDiv>
   );

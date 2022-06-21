@@ -1,9 +1,9 @@
 import { SPointerDiv } from "./Pointer.styled";
 
-const Pointer = ({ cursorPos, handleClick }) => {
+const Pointer = ({ cursorPos, handleMouseClick }) => {
   return (
     <SPointerDiv
-      onClick={(e) => handleClick(e)}
+      onClick={(e) => handleMouseClick(e)}
       cursorPos={cursorPos}></SPointerDiv>
   );
 };
