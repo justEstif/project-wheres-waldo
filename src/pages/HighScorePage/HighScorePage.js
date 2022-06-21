@@ -2,6 +2,7 @@ import { uid } from "uid";
 import { Fragment } from "react";
 import { useEffect, useState } from "react";
 import { db } from "../../firebase-config";
+import { SUserScoreDiv } from "./HighScore.styled";
 import { getDocs, collection, doc } from "firebase/firestore";
 
 const getCollection = async () => {
@@ -15,19 +16,17 @@ const getCollection = async () => {
       endTime: doc.data()["endTime"],
     });
   });
-  console.log(returnCollection);
   return returnCollection;
 };
 
 const createOptions = (userScore) => {
   const allOptions = userScore.map((user) => {
-    console.log(user.endTime - user.startTime);
     return (
       <Fragment key={uid()}>
-        <div>
-          {user.userName}
-          {Math.floor(user.endTime - user.startTime)}
-        </div>
+        <SUserScoreDiv>
+          <div>{user.userName}</div>
+          <div>{Math.floor(user.endTime - user.startTime)}seconds</div>
+        </SUserScoreDiv>
       </Fragment>
     );
   });
@@ -45,6 +44,7 @@ const HighScorePage = () => {
   return (
     <div>
       <h1>Hello world</h1>
+
       {createOptions(userScore)}
     </div>
   );

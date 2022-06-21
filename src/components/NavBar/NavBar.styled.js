@@ -7,10 +7,6 @@ const SNavBarDiv = styled.div`
   height: 5%;
   background-color: black;
   color: wheat;
-
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
   font-size: 20px;
 `;
 const SNavBarUl = styled.ul`
