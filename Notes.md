@@ -15,7 +15,7 @@
           - [x] remove the selected correct answer from options
     - [ ] keep track of how long it takes between when the photo is first loaded and when the user finally identifies all characters
       - do this on the server side
-      - [ ] once a round is complete, ask the user for his/her name and record that time.
+      - [x] once a round is complete, ask the user for his/her name and record that time.
 
 # Thought Process
 
