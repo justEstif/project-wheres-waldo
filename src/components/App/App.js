@@ -11,7 +11,8 @@ import {
 
 import { GlobalStyle, SAppDiv } from "./App.styled";
 import { rPlace } from "../../assets/index";
-import { Header, Overlay, Image } from "../../components/index";
+import { NavBar, Overlay, Image } from "../../components/index";
+import { useNavigate } from "react-router-dom";
 
 const getCoordinates = (e) => {
   const bound = e.target.getBoundingClientRect();
@@ -118,16 +119,16 @@ const App = () => {
 
     e.preventDefault();
     addDoc();
-    console.log(Math.floor(userData.endTime - userData.startTime));
     emptyUserData();
     setClicked(false);
+    navigate("/score");
   };
-
+  const navigate = useNavigate();
   return (
     <Fragment>
       <GlobalStyle />
       <SAppDiv>
-        <Header />
+        <NavBar />
         <Overlay
           clicked={clicked}
           cursorPos={cursorPos}

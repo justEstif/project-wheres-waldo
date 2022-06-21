@@ -1,6 +1,7 @@
 import App from "./App/App";
 import Overlay from "./Overlay/Overlay";
 import Header from "./Header/Header";
+import NavBar from "./NavBar/NavBar";
 import Image from "./Image/Image";
 import Pointer from "./Pointer/Pointer";
 import Option from "./Option/Option";
@@ -16,4 +17,5 @@ export {
   OptionsContainer,
   App,
   Header,
+  NavBar,
 };
